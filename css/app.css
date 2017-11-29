@@ -37,7 +37,13 @@ h1 {
  * Styles for the deck of cards
  */
 
-.deck {
+ /*TODO:
+  * - Move the box shadow after the animation;
+  * - Make css class for matching and not match;
+  * - Use `animation-fill-mode: backwords` to generate cards on the deck;
+  */
+
+#deck {
     width: 660px;
     min-height: 680px;
     background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
@@ -51,7 +57,7 @@ h1 {
     margin: 0 0 3em;
 }
 
-.deck .card {
+#deck .card {
     height: 125px;
     width: 125px;
     background: #2e3d49;
@@ -65,17 +71,39 @@ h1 {
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
-.deck .card.open {
+.show {
+  animation: open 1s;
+}
+
+@keyframes open {
+  0% {
+    background: #2e3d49;
+    font-size: 0px;
+  };
+
+  95% {
+    background: #2e3d49;
+  }
+
+  100% {
+    background: #02b3e4;
+    font-size: 33px;
+  };
+}
+
+#deck .card.open {
     transform: rotateY(0);
     background: #02b3e4;
     cursor: default;
 }
 
-.deck .card.show {
+#deck .card.show, .fa.show {
     font-size: 33px;
+    transform: rotate3d(0, 1000, 1, 180deg);
+    transition: 1s;
 }
 
-.deck .card.match {
+#deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;

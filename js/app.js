@@ -1,7 +1,29 @@
+/*TODO:
+ * - Control the state for cards;
+ * - Make a function to randomize cards;
+ * - Generate cards from JS;
+ * - Make cards objects{};
+ */
+
 /*
  * Create a list that holds all of your cards
  */
+var $deck = document.getElementById("deck");
+var $card = document.getElementsByClassName("card");
 
+Array.from($card).forEach(function(card) {
+  var c = card;
+  c.addEventListener("click", function (item) {
+    var i = item;
+    var iPath = item.path[0];
+    var iChild = iPath.childNodes[1];
+
+    iPath.classList += " show open";
+    iChild.classList += " show";
+
+    console.log(i.path[0], item.path[0].childNodes[1].classList);
+  });
+})
 
 /*
  * Display the cards on the page
@@ -24,6 +46,9 @@ function shuffle(array) {
 
     return array;
 }
+
+
+
 
 
 /*
