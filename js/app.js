@@ -8,8 +8,85 @@
 /*
  * Create a list that holds all of your cards
  */
+var $icons = [
+  "fa-diamond",
+  "fa-paper-plane-o",
+  "fa fa-anchor",
+  "fa-bolt",
+  "fa-cube",
+  "fa-leaf",
+  "fa-bicycle",
+  "fa-bomb"];
+
+var cards = {
+  card : [{
+    index: 0,
+    icon: undefined,
+  },{
+    index: 1,
+    icon: undefined,
+  },{
+    index: 2,
+    icon: undefined,
+  },{
+    index: 3,
+    icon: undefined,
+  },{
+    index: 4,
+    icon: undefined,
+  },{
+    index: 5,
+    icon: undefined,
+  },{
+    index: 6,
+    icon: undefined,
+  },{
+    index: 7,
+    icon: undefined,
+  },{
+    index: 8,
+    icon: undefined,
+  },{
+    index: 9,
+    icon: undefined,
+  },{
+    index: 10,
+    icon: undefined,
+  },{
+    index: 11,
+    icon: undefined,
+  },{
+    index: 12,
+    icon: undefined,
+  },{
+    index: 13,
+    icon: undefined,
+  },{
+    index: 14,
+    icon: undefined,
+  },{
+    index: 15,
+    icon: undefined,
+  },{
+    index: 16,
+    icon: undefined,
+  }],
+  getHTML: function(style) {
+    var s = style;
+    return "<i class='fa " + s + "'";
+  },
+  updateState: function(index, state) {
+    var i = index;
+    var c = $cardsObj[i];
+    var s = state;
+    c.state = s;
+  }
+};
+
 var $deck = document.getElementById("deck");
 var $card = document.getElementsByClassName("card");
+var $cardsObj = cards.card;
+
 
 Array.from($card).forEach(function(card) {
   var c = card;
