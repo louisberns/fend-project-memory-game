@@ -77,6 +77,10 @@ h1 {
     show-fa 1.3s;
 }
 
+.wrong {
+  animation: not-match 1s;
+}
+
 @keyframes open {
   0% {background: #2e3d49;};
   100% {background: #02b3e4;};
@@ -85,6 +89,12 @@ h1 {
   0% {font-size: 0; color: transparent; user-select: none;};
   95% {font-size: 0; color: transparent;}
   100% {font-size: 33px;};
+}
+
+@keyframes not-match {
+  0% {transform: rotateZ(20deg);};
+  50% {transform: rotateZ(-20deg);}
+  100% {transform: rotateZ(20deg);};
 }
 
 #deck .card.open {
@@ -98,21 +108,23 @@ h1 {
   transform: rotate3d(0, -20, 0, 180deg);
   transition: 1s;
   user-select: none;
-}
-
-#deck .fa.show {
   font-size: 33px;
   user-select: none;
-}
-
-#deck .card.show, .fa.show {
-
 }
 
 #deck .card.match {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+    user-select: none;
+}
+
+#deck .card.wrong {
+    transition: 1s;
+    cursor: default;
+    background: red;
+    font-size: 33px;
+    user-select: none;
 }
 
 /*
@@ -137,7 +149,7 @@ h1 {
     display: inline-block;
 }
 
-.score-panel .restart {
+.score-panel #restart {
     float: right;
     cursor: pointer;
 }
