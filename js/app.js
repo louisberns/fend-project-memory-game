@@ -102,6 +102,16 @@ var cards = {
 
       $deck.innerHTML += cardHTML;
     })
+  },
+  close: function() {
+    cards.card.forEach(function(c) {
+      var i = document.getElementById(c.index);
+
+      c.state = false;
+      c.icon = undefined;
+
+      i.classList = "card";
+    })
   }
 };
 
@@ -146,7 +156,7 @@ function addIcons () {
     c[x].icon = r[x];
 
     //Define class on DOM
-    $cardID.classList += r[x];
+    $cardID.classList = "fa " + r[x];
 
     //If ERR console message to debug
     if (c[x].icon === undefined) {
@@ -154,21 +164,39 @@ function addIcons () {
     }
   }
 }
-//Display cards on deck, and add icons to the cards
-cards.display();
-addIcons();
-
-//Variables to control elements on page
-var $card = document.getElementsByClassName("card");
-var $restart = document.getElementById("restart");
+//Temmp values for selected cards
 var currentIcon = undefined;
 var prevIcon = undefined;
 var currentItem = undefined;
 var openCards = [];
 
+//Initialize a new game
+function newGame() {
+  cards.display();
+  addIcons();
+}
+
+newGame();
+
+//Reset game
+function resetGame() {
+  cards.close();
+  addIcons();
+}
+
+//Variables to control elements on page
+var $card = document.getElementsByClassName("card");
+var $restart = document.getElementById("restart");
+
 $restart.addEventListener("click", function(r) {
-  console.log(r);
-  r.path[1].innerText += "PRESS F5 TO RESTART";
+  console.log("RESTART GAME");
+
+  /*r.path[1].innerText = "PRESS F5 TO RESTART";*/
+  $restart.classList = "run-restart";
+  window.setTimeout(function() {
+    resetGame();
+    $restart.classList = "";
+  }, 1000);
 });
 
 //Wrong cards animation
@@ -194,15 +222,23 @@ function checkMatch (obj, iPath, iChild) {
     if (icoOne === icoTwo) {
       console.log("It's a Match  ||  icoOne: " + icoOne + "  ||  icoTwo: " + icoTwo);
 
-      p.classList = "card match";
-      o.state = true;
+      p.classList += " show open";
 
-      $first.classList = "card match";
-      firstCard.state = true;
+      window.setTimeout(function(){
+        p.classList = "card match";
+        o.state = true;
+
+        $first.classList = "card match";
+        firstCard.state = true;
+      }, 1000);
 
       openCards = [];
     } else {
-      wrongCards(p, $first)
+      p.classList += " show open";
+
+      window.setTimeout(function(){
+        wrongCards(p, $first);
+      }, 1000);
 
       window.setTimeout(function(){
         p.classList = "card";
