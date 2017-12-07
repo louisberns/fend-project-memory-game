@@ -1,6 +1,7 @@
 /*TODO:
- * - Control the state for cards;
- * - Animate match
+ * - Add var to control stars and moves
+ * - Fix Animate match
+ * - Add alert for winning the game and showing the score, reset game later
  */
 
 /*
@@ -139,7 +140,7 @@ function shuffle(array) {
     return array;
 }
 
-//Add icons to Objects and Classlist - TODO: -fix shuffle function
+//Add icons to Objects and Classlist
 function addIcons () {
   var c = cards.card;
   var r = $icons;
@@ -169,6 +170,7 @@ var currentIcon = undefined;
 var prevIcon = undefined;
 var currentItem = undefined;
 var openCards = [];
+var countMatch = [];
 
 //Initialize a new game
 function newGame() {
@@ -182,6 +184,13 @@ newGame();
 function resetGame() {
   cards.close();
   addIcons();
+}
+
+//Function for modal to win the game and start new one
+function animationWin() {
+  window.setTimeout(function() {
+    resetGame();
+  }, 3000);
 }
 
 //Variables to control elements on page
@@ -230,6 +239,11 @@ function checkMatch (obj, iPath, iChild) {
 
         $first.classList = "card match";
         firstCard.state = true;
+
+        countMatch.push("clickNow: " + p + "  ||  clickTwo: " + $first);
+
+        //Check if wins
+        animationWin();
       }, 1000);
 
       openCards = [];
@@ -258,7 +272,7 @@ function checkMatch (obj, iPath, iChild) {
   }
 }
 
-//Open the item when clicked TODO: -Add validate match
+//Open the item when clicked
 function openItem (item, obj, iPath, iChild) {
   var i = item;
   var o = obj;
