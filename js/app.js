@@ -176,10 +176,11 @@ var prevIcon = undefined;
 var currentItem = undefined;
 var openCards = [];
 var countMatch = [];
-var $stars = 3;
-var $moves = 3;
-var starsHTML = document.getElementById("stars");
-var movesHTML = document.getElementById("moves");
+const $startOne = document.getElementById("start-one");
+const $startTwo = document.getElementById("start-two");
+const $startThree = document.getElementById("start-three");
+const starsHTML = document.getElementById("stars");
+const movesHTML = document.getElementById("moves");
 
 //Initialize a new game
 function newGame() {
@@ -193,6 +194,13 @@ newGame();
 function resetGame() {
   cards.close();
   addIcons();
+
+  //Update stars and moves value on the screen
+  player.moves = 3;
+  player.stars = 3;
+  updateScore(2, 0);
+  updateScore(1, 0);
+
 }
 
 //Function for modal to win the game and start new one
@@ -204,33 +212,35 @@ function animationWin() {
 
 //Function to update moves on the #score-panel
 function updateScore(type, score) {
-  var m = movesHTML;
-  var s = starsHTML;
+  const m = movesHTML;
+  const s = starsHTML;
   if (type === 1) {
     if (score) {
-      $moves += 3;
-      m.innerText = $moves;
+      player.moves += 3;
+      m.innerText = player.moves;
     } else if (score === 0){
-      m.innerText = $moves;
+      m.innerText = player.moves;
     } else {
-      m.innerText = $moves;
+      m.innerText = player.moves;
     }
   } else if (type === 2) {
     if (score) {
-      $stars += 1;
-      s.innerText = $stars;
+      if (player.stars < 3) {
+        player.stars += 1;
+        s.innerText = player.stars;
+      }
     } else if (score === 0){
-      s.innerText = $stars;
+      s.innerText = player.stars;
     } else {
-      $stars--;
-      s.innerText = $stars;
+      player.stars--;
+      s.innerText = player.stars;
     }
   }
 }
 
 //Variables to control elements on page
-var $card = document.getElementsByClassName("card");
-var $restart = document.getElementById("restart");
+const $card = document.getElementsByClassName("card");
+const $restart = document.getElementById("restart");
 
 $restart.addEventListener("click", function(r) {
   console.log("RESTART GAME");
@@ -251,18 +261,18 @@ function wrongCards (last, first) {
 
 //Check if the cards match
 function checkMatch (obj, iPath, iChild) {
-  var o = obj;
-  var p = iPath;
-  var c = iChild;
+  const o = obj;
+  const p = iPath;
+  const c = iChild;
 
   if (openCards.length === 0) {
     openCards.push(obj);
   } else if (openCards.length === 1) {
-    var firstCard = openCards[0];
-    var firstCardID = firstCard.index;
-    var $first = document.getElementById(firstCardID);
-    var icoOne = firstCard.icon;
-    var icoTwo = obj.icon;
+    const firstCard = openCards[0];
+    const firstCardID = firstCard.index;
+    const $first = document.getElementById(firstCardID);
+    const icoOne = firstCard.icon;
+    const icoTwo = obj.icon;
     if (icoOne === icoTwo) {
       console.log("It's a Match  ||  icoOne: " + icoOne + "  ||  icoTwo: " + icoTwo);
 
@@ -306,7 +316,7 @@ function checkMatch (obj, iPath, iChild) {
       },2000);
 
       //Update value of moves ans stars and display on the #score-panel
-      $moves += 1;
+      player.moves += 1;
       updateScore(1, false);
       updateScore(2, false);
 
@@ -323,10 +333,10 @@ function checkMatch (obj, iPath, iChild) {
 
 //Open the item when clicked
 function openItem (item, obj, iPath, iChild) {
-  var i = item;
-  var o = obj;
-  var p = iPath;
-  var c = iChild;
+  const i = item;
+  const o = obj;
+  const p = iPath;
+  const c = iChild;
 
   if (o.state === false) {
     p.classList += " show open";
@@ -348,16 +358,16 @@ function openItem (item, obj, iPath, iChild) {
 }
 
 Array.from($card).forEach(function(card) {
-  var c = card;
+  const c = card;
   c.addEventListener("click", function (item) {
-    var i = item;
-    var oID = item.path[0].id;
-    var o = $cardsObj[oID];
-    var iPath = item.path[0];
-    var iChild = iPath.childNodes[0];
+    const i = item;
+    const oID = item.path[0].id;
+    const o = $cardsObj[oID];
+    const iPath = item.path[0];
+    const iChild = iPath.childNodes[0];
 
     currentItem = i;
-    $moves--;
+    player.moves--;
 
     openItem(i, o, iPath, iChild);
 
