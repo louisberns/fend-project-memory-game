@@ -1,5 +1,5 @@
 /*TODO:
- * - Add var to control stars and moves
+ * - Fix var for stars, update through JS
  * - Fix Animate match
  * - Add alert for winning the game and showing the score, reset game later
  */
@@ -97,12 +97,17 @@ var cards = {
     state: false
   }],
   display: function() {
+    //Function for displaying cards on the screen #deck
     cards.card.forEach(function(c) {
       var i = c.index;
       var cardHTML = "<div id='" + i + "' class='card'><i class='fa '</i></div>";
 
       $deck.innerHTML += cardHTML;
-    })
+    });
+
+    //Display stars and moves on the screen
+    updateScore(2, 0);
+    updateScore(1, 0);
   },
   close: function() {
     cards.card.forEach(function(c) {
@@ -171,6 +176,10 @@ var prevIcon = undefined;
 var currentItem = undefined;
 var openCards = [];
 var countMatch = [];
+var $stars = 3;
+var $moves = 3;
+var starsHTML = document.getElementById("stars");
+var movesHTML = document.getElementById("moves");
 
 //Initialize a new game
 function newGame() {
@@ -191,6 +200,32 @@ function animationWin() {
   window.setTimeout(function() {
     resetGame();
   }, 3000);
+}
+
+//Function to update moves on the #score-panel
+function updateScore(type, score) {
+  var m = movesHTML;
+  var s = starsHTML;
+  if (type === 1) {
+    if (score) {
+      $moves += 3;
+      m.innerText = $moves;
+    } else if (score === 0){
+      m.innerText = $moves;
+    } else {
+      m.innerText = $moves;
+    }
+  } else if (type === 2) {
+    if (score) {
+      $stars += 1;
+      s.innerText = $stars;
+    } else if (score === 0){
+      s.innerText = $stars;
+    } else {
+      $stars--;
+      s.innerText = $stars;
+    }
+  }
 }
 
 //Variables to control elements on page
@@ -233,19 +268,27 @@ function checkMatch (obj, iPath, iChild) {
 
       p.classList += " show open";
 
+      //Wait the animation runs
       window.setTimeout(function(){
+        //Update classes of matched cards
         p.classList = "card match";
-        o.state = true;
-
         $first.classList = "card match";
+
+        //Update the object's states => 'matched'
+        o.state = true;
         firstCard.state = true;
 
+        //Push object to countMatch array
         countMatch.push("clickNow: " + p + "  ||  clickTwo: " + $first);
 
-        //Check if wins
-        animationWin();
-      }, 1000);
+        //Update value of moves ans stars and display on the #score-panel
+        updateScore(1, true);
+        updateScore(2, true);
 
+        //Check if wins
+        /*animationWin();*/
+      }, 1000);
+      //Reset value for openCards
       openCards = [];
     } else {
       p.classList += " show open";
@@ -262,11 +305,17 @@ function checkMatch (obj, iPath, iChild) {
         firstCard.state = false;
       },2000);
 
+      //Update value of moves ans stars and display on the #score-panel
+      $moves += 1;
+      updateScore(1, false);
+      updateScore(2, false);
+
       console.log("Sorry, try again");
 
       openCards = [];
     }
   } else {
+    //Reset value for openCards
     openCards = [];
     console.log("ERR did not compute well");
   }
@@ -308,6 +357,7 @@ Array.from($card).forEach(function(card) {
     var iChild = iPath.childNodes[0];
 
     currentItem = i;
+    $moves--;
 
     openItem(i, o, iPath, iChild);
 
