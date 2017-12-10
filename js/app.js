@@ -121,18 +121,62 @@ const cards = {
   }
 };
 
-//Rewrite console.log function
+
+
+//Message object
+const messages = {
+  welcome: "Choose a card and try to remember your pick.",
+  next: "Choose your next card.",
+  match: "It's a match!!! Matched icon: ",
+  wrong: "Sorry, wrong combination. Try again.",
+  moves: "+1 move. Moves: ",
+  win: "Congratulations! You WON.",
+  finalScore: "Your finalScore is: ",
+  starFull: "Nice move, you have THREE STARS!",
+  starZero: "You have 0 stars.",
+  resetMoves: "Reseted moves. MOVES: ",
+  restartGame: "RESTART...<br />LOADING...<br />GAME RENEWED.",
+  playAgain: "<br />|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />"
+}
+
+/*
+ * PRINT LOG ON SCREEN CONSOLE
+ */
+
+//Functions to get console elements
+const $console = document.getElementById("console");
+const $consoleBox = document.getElementById("console-box");
+
 (function() {
   var old = console.log;
-  var log = document.getElementById("console");
-  console.log = function (message) {
-    if (typeof message === "object") {
-      log.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + "<br />";
+  console.log = function(message, type) {
+    var type = type || 0;
+    let m;
+
+    if (type) {
+      m = "<pre class='console-ascii'>" + message + "</pre><br />";
     } else {
-      log.innerHTML += message + "<br />";
+      m = "<span class='console-text'>" + message + "</span><br />";
     }
-  }
+    $console.innerHTML += m;
+    $consoleBox.scrollTop = $consoleBox.scrollHeight;
+  };
 })();
+
+/*//Log messages on console screen
+function log(message) {
+  m = message + "<br />";
+  $console.innerHTML += m;
+  $consoleBox.scrollTop = $consoleBox.scrollHeight;
+}*/
+
+function welcomeMessage() {
+  console.log(messages.welcome);
+}
+
+/*
+ * GAME FUNCTIONS AND ANIMATIONS
+ */
 
 //Get DECK elemnt for appending content, and var to Cards objects
 var $deck = document.getElementById("deck");
@@ -165,7 +209,7 @@ function addIcons () {
 
   //Shuffle array to randomize icons
   shuffle(r);
-  console.log(r);
+  /*console.log(r);*/
 
   //Give icons to cards
   for (let x = 0; x < c.length; x++) {
@@ -186,7 +230,6 @@ function addIcons () {
 
 //Temmp values for selected cards
 var currentIcon;
-var prevIcon;
 var currentItem;
 const openCards = [];
 const countMatch = [];
@@ -194,15 +237,12 @@ const iconsMatch = $icons.slice(0, 8);
 const $starOne = document.getElementById("star-one");
 const $starTwo = document.getElementById("star-two");
 const $starThree = document.getElementById("star-three");
-const $winMessage = document.getElementById("win-message");
-const $scoreWin = document.getElementById("score-win");
-const $starsWin = document.getElementById("stars-win");
-const starsHTML = document.getElementById("stars");
 const movesHTML = document.getElementById("moves");
 const iconsStars = [$starOne, $starTwo, $starThree];
 
 //Initialize a new game
 function newGame() {
+  welcomeMessage();
   cards.display();
   addIcons();
 }
@@ -211,6 +251,8 @@ newGame();
 
 //Reset game
 function resetGame() {
+  console.log(messages.restartGame);
+
   cards.close();
   addIcons();
 
@@ -239,16 +281,16 @@ function appendStars(count, score) {
   if (score === true) {
     switch (i) {
       case 1:
-        $starThree.classList = "fa fa-star open-star";
+        iconsStars[2].classList = "fa fa-star open-star";
         break;
       case 2:
-        $starTwo.classList = "fa fa-star open-star";
+        iconsStars[1].classList = "fa fa-star open-star";
         break;
       case 3:
-        $starOne.classList = "fa fa-star open-star";
-        $starTwo.classList = "fa fa-star open-star";
-        $starThree.classList = "fa fa-star open-star";
-        console.log("Already with THREE stars ***");
+        iconsStars[0].classList = "fa fa-star open-star";
+        iconsStars[1].classList = "fa fa-star open-star";
+        iconsStars[2].classList = "fa fa-star open-star";
+        console.log(messages.starFull);
         break;
       case undefined:
         console.log("The count is undefined. Value of i: " + i + "");
@@ -257,15 +299,16 @@ function appendStars(count, score) {
   } else if (score === false){
     switch (i) {
       case 0:
-        $starThree.classList = "fa fa-star";
-        $starTwo.classList = "fa fa-star";
-        $starOne.classList = "fa fa-star";
-        console.log("You have 0 stars. Value of i: " + i + "");
+        iconsStars[2].classList = "fa fa-star";
+        iconsStars[1].classList = "fa fa-star";
+        iconsStars[0].classList = "fa fa-star";
+        console.log(messages.starZero);
+        break;
       case 1:
-        $starTwo.classList = "fa fa-star";
+        iconsStars[1].classList = "fa fa-star";
         break;
       case 2:
-        $starThree.classList = "fa fa-star";
+        iconsStars[2].classList = "fa fa-star";
         break;
       case 3:
         console.log("The player stars is not subtracted. Value of i: " + i + "");
@@ -274,8 +317,6 @@ function appendStars(count, score) {
         console.log("The count is undefined. Value of i: " + i + "");
         break;
     }
-  } else {
-    debugger;
   }
 }
 
@@ -285,7 +326,6 @@ function appendStars(count, score) {
  */
 function updateScore(type, score) {
   const m = movesHTML;
-  const s = starsHTML;
   const p = player;
 
   if (type === 1) { /*MOVES*/
@@ -296,7 +336,7 @@ function updateScore(type, score) {
     } else if (score === 0) { /*For score [0] reset*/
       p.moves = 0;
       m.innerText = p.moves;
-      console.log("Reseted moves");
+      console.log(messages.resetMoves + p.moves);
     } else {
       console.log("ERR: score is unexpected. Score: " + score + "");
     }
@@ -305,7 +345,7 @@ function updateScore(type, score) {
     if (score) { /*For score TRUE*/
       //Check if player has less than 3 stars
       if (p.stars === 3) {
-        console.log("Already w/ THREE ***");
+        console.log("***");
       } else if (p.stars >= 0 && p.stars <= 3) {
         p.stars++;
       }
@@ -323,8 +363,6 @@ const $restart = document.getElementById("restart");
 
 //Restart the game when clicked on restart icon
 $restart.addEventListener("click", function(r) {
-  console.log("RESTART GAME");
-
   //Add class w/ animation and run function to restart
   $restart.classList = "run-restart";
   window.setTimeout(function() {
@@ -343,7 +381,6 @@ function wrongCards (last, first) {
 function checkMatch (obj, iPath, iChild) {
   const o = obj;
   const p = iPath;
-  const c = iChild;
 
   if (openCards.length === 0) {
     //Check error for function calling
@@ -357,9 +394,6 @@ function checkMatch (obj, iPath, iChild) {
     const icoTwo = obj.icon;
     if (icoOne === icoTwo) {
       //If both icons are equal, match cards
-
-      //Log the cards on console
-      console.log("It's a Match  ||  icoOne: " + icoOne + "  ||  icoTwo: " + icoTwo);
 
       p.classList += " show open";
 
@@ -380,8 +414,13 @@ function checkMatch (obj, iPath, iChild) {
         updateScore(1, true);
         updateScore(2, true);
 
+        //Log the cards on console
+        console.log(messages.match + icoOne);
+
         //Check if wins
         if (countMatch.length === iconsMatch.length) {
+          //Print the game result and start a new game
+          console.log(messages.playAgain);
           animationWin();
         }
       }, 1000);
@@ -410,9 +449,9 @@ function checkMatch (obj, iPath, iChild) {
         //Update value of moves ans stars and display on the #score-panel
         updateScore(1, true);
         updateScore(2, false);
-      }, 2000);
 
-      console.log("Sorry, try again");
+        console.log(messages.wrong);
+      }, 2000);
 
       //Clear const value for openCards
       openCards.splice(0, openCards.length);
@@ -439,7 +478,7 @@ function openItem (item, obj, iPath, iChild) {
   //If is already a card open, check if match w/ first card
   if (openCards.length !== 0) {
     if (o.index === openCards[0].index) {
-      console.log("Choose your next card");
+      console.log(messages.next);
     } else {
       checkMatch(o, p, c);
     }
@@ -468,17 +507,7 @@ Array.from($card).forEach(function(card) {
     currentItem = i;
     currentIcon = item.path[0].childNodes[0].classList;
 
-    /*//Check on the console for selected card - icon class
-    console.log(i.path[0], item.path[0].childNodes[0].classList);*/
+    //Check on the console for selected card - icon class
+    console.log("ITEM SELECTED: " + currentIcon["1"]);
   });
 });
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */

@@ -11,7 +11,7 @@ html {
 html,
 body {
     margin: 0;
-    padding: .5em;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -22,11 +22,13 @@ body {
 
 .container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     flex-direction: row;
     max-height: 90vw;
-    max-width: 95vw;
+    max-width: 98vw;
+    margin: 0;
+    padding: .5em;
 }
 
 h1 {
@@ -162,44 +164,81 @@ h1 {
 
 #console-panel {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   flex-direction: column;
-  max-width: 40vw;
+  min-width: 40vw;
+  min-height: 50vw;
   order: 2;
 }
 
-#score-panel {
-    text-align: center;
-    flex-direction: row;
-    margin: 0 0 5vw;
-    display: flex;
-    line-height: 3em;
-    align-self: start;
-    justify-content: space-between;
-    width: 32vw;
-    order: 1;
-    font-size: 1.5em;
+#console-box{
+  max-height: 50vw;
+  max-width: 40vw;
+  overflow: auto;
+  order: 2;
+  min-height: 30vw;
+  background: #212121;
+  color: #07ce07;
+  box-sizing: border-box;
+  padding: 1em;
+  flex-grow: 1;
 }
 
-#score-panel #stars {
+#console {
+  align-self: baseline;
+  will-change: contents;
+}
+
+#console-stats {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #fff;
+  min-width: 10vw;
+  min-height: 10vw;
+  position: fixed;
+  top: 20vh;
+  right: 10vh;
+  overflow: hidden;
+  text-align: left;
+  line-height: 1.7em;
+  box-sizing: border-box;
+  padding: 0.5em;
+  margin: 0;
+}
+
+#console-stats #stars {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-#score-panel #stars li {
+#console-stats #stars li {
     list-style: none;
     display: inline-block;
 }
 
-#score-panel #restart {
+#console-stats #restart {
     float: right;
     cursor: pointer;
+    border: 1px solid #07ce07;
+    font-weight: bold;
+    margin: .4em 0 0 0;
+    padding: 0 .2em;
+    max-width: 53%;
 }
 
 #moves #restart .run-restart {
   transition-timing-function: 1s ease;
+}
+
+#restart .fa-repeat {
+  font-size: 1em;
+  transition: 2s ease-in-out;
+}
+
+#restart-text {
+
 }
 
 #stars .fa-star {
@@ -207,7 +246,7 @@ h1 {
 }
 
 #stars .open-star {
-  font-size: 1.5em;
+  font-size: 2vh;
 }
 
 .open-star {
@@ -220,15 +259,10 @@ h1 {
   100%{transform: rotateZ(0deg);}
 }
 
-#console-box{
-  max-height: 35vw;
-  max-width: 35vw;
-  overflow: scroll;
-  align-self: flex-end;
-  order: 2;
-  min-height: 30vw;
-}
+/*
+ * Alert after won, Play Again
+ */
 
-#console {
-  align-self: baseline;
-}
+ #win-alert {
+   display: none;
+ }
