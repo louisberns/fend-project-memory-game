@@ -1,20 +1,33 @@
 # Memory Game Project
 
-## Table of Contents
+Play online: https://louisberns.github.io/fend-project-memory-game/
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+OR
+
+Install: ```$ git clone https://github.com/louisberns/fend-project-memory-game.git ```
 
 ## Instructions
+This is a memory game, choose two cards to match it. Each time you choose *TWO cards* it'll count *one MOVE*.
+- IF cards MATCH you gain one STAR (máx. 3 stars)
+- IF cards Doesn't MATCH you lose one STAR
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Try to finish the game with the least amount of MOVES and at least one STAR.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Console
+All the game communication is made through the Console.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Pay attention it may tell you something important.
 
-## Contributing
+## Next Features
+- [ ] Limited number of moves
+- [ ] Cast STAR to gain 7 moves
+- [ ] Include player items inventory
+- [ ] Use matched cards as items
+- [ ] Include instructions for items
+- [ ] HELP button, always have instructions available
+- [ ] Created history to player
+- [ ] Add NPCs and interactions
+- [ ] Add battle mechanism
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Motivation
+This game is from a Udacity course for the Front-end Developer Nanodegree. The console features its a +plus!
