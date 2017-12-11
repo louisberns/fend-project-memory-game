@@ -107,7 +107,7 @@ const cards = {
 
     //Display stars and moves on the screen
     updateScore(1, 0);
-    updateScore(2, true);
+    updateScore(2, 0);
   },
   close: function() {
     cards.card.forEach(function(c) {
@@ -125,22 +125,21 @@ const cards = {
 
 //Message object
 const messages = {
-  /*welcome: "<pre class='console-ascii'><br  />███╗   ███╗███████╗███╗   ███╗ ██████╗ ██████╗ ██╗   ██╗<br />████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔══██╗╚██╗ ██╔╝<br />██╔████╔██║█████╗  ██╔████╔██║██║   ██║██████╔╝ ╚████╔╝<br />██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║██╔══██╗  ╚██╔╝<br />██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝██║  ██║   ██║<br />╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝</pre><br /><br /><span class='console-text'>Welcome to Memory, hope you enjoy it!</span>",*/
   welcome: ">Welcome to Memory, hope you enjoy it!",
   tutorial: "<br />----------------------<br /><span class='console-text'>Find all matches to WIN.<br />ONE MOVE open two cards.<br />IF MATCH = +1 STAR.<br /> IF Doesn't MATCH = -1 STAR.<br />----------------------</span>",
   next: "Choose your next card.",
   match: "It's a match!!! Matched icon: ",
-  wrong: "Sorry, wrong combination. Try again.",
+  wrong: "Sorry, wrong combination. Try again.<br />You lost one star.",
   moves: "+1 move. Moves: ",
-  win: "██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗ <br />██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗<br />██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝<br />██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗<br />╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║<br /> ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝",
+  win: "<br />██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗ <br />██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗<br />██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝<br />██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗<br />╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║<br /> ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝",
   finalScore: "Your finalScore is: ",
   starFull: "Nice, you have THREE STARS!",
   starZero: "You have 0 stars.",
   resetMoves: "Reseted moves. MOVES: ",
-  restartGame: "RESTART...<br />LOADING...<br />GAME RENEWED.",
+  restartGame: "<br />RESTART...<br />LOADING...<br />GAME RENEWED.<br />",
   playAgain: "|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
   rechargeMoves: "<span class='console-text'>You have ZERO MOVES, click in RECHARGE.</span>",
-  gameOver: " ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
+  gameOver: "<br /> ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
   movesUpdated: "Your MOVES have been updated."
 }
 
@@ -153,8 +152,7 @@ const $console = document.getElementById("console");
 const $consoleBox = document.getElementById("console-box");
 
 (function() {
-  var old = console.log;
-  console.log = function(message, type) {
+  log = function(message, type) {
     var type = type || 0;
     let m;
 
@@ -176,7 +174,7 @@ function log(message) {
 }*/
 
 function welcomeMessage() {
-  console.log(messages.welcome + messages.tutorial);
+  log(messages.welcome + messages.tutorial);
 }
 
 /*
@@ -214,7 +212,7 @@ function addIcons () {
 
   //Shuffle array to randomize icons
   shuffle(r);
-  /*console.log(r);*/
+  /*log(r);*/
 
   //Give icons to cards
   for (let x = 0; x < c.length; x++) {
@@ -228,7 +226,7 @@ function addIcons () {
 
     //If ERR console message to debug
     if (c[x].icon === undefined) {
-        console.log("ERR: Icon is undefined. Item: " + c[x] + "  ||  Icon: " + c[x].icon + "  ||  Index: " + x);
+        log("ERR: Icon is undefined. Item: " + c[x] + "  ||  Icon: " + c[x].icon + "  ||  Index: " + x);
     }
   }
 }
@@ -258,16 +256,14 @@ newGame();
 
 //Reset game
 function resetGame() {
-  console.log(messages.restartGame);
+  log(messages.restartGame);
 
   cards.close();
   addIcons();
 
   //Update stars and moves value on the screen
-  player.moves = 13;
-  player.stars = 3;
   updateScore(1, 0);
-  updateScore(2, true);
+  updateScore(2, 0);
 
   //Clear countMatch const
   countMatch.splice(0, countMatch.length);
@@ -295,7 +291,7 @@ function rechargeButton() {
   player.moves += 10;
   updateScore(1, true);
   updateScore(2, false);
-  console.log(messages.movesUpdated);
+  log(messages.movesUpdated);
   $updateMoves.classList = "btn-stats update-closed";
 }
 
@@ -315,7 +311,7 @@ $updateMoves.addEventListener("click", function() {
  */
 function appendStars(count, score) {
   let i = count;
-  if (score === true) {
+  if (score === true || score === 0) {
     switch (i) {
       case 1:
         iconsStars[2].classList = "fa fa-star open-star";
@@ -327,10 +323,10 @@ function appendStars(count, score) {
         iconsStars[0].classList = "fa fa-star open-star";
         iconsStars[1].classList = "fa fa-star open-star";
         iconsStars[2].classList = "fa fa-star open-star";
-        console.log(messages.starFull);
+        log(messages.starFull);
         break;
       case undefined:
-        console.log("The count is undefined. Value of i: " + i + "");
+        log("The count is undefined. Value of i: " + i + "");
         break;
     }
   } else if (score === false){
@@ -339,7 +335,7 @@ function appendStars(count, score) {
         iconsStars[2].classList = "fa fa-star";
         iconsStars[1].classList = "fa fa-star";
         iconsStars[0].classList = "fa fa-star";
-        console.log(messages.starZero);
+        log(messages.starZero);
         break;
       case 1:
         iconsStars[1].classList = "fa fa-star";
@@ -348,10 +344,10 @@ function appendStars(count, score) {
         iconsStars[2].classList = "fa fa-star";
         break;
       case 3:
-        console.log("The player stars is not subtracted. Value of i: " + i + "");
+        log("The player stars is not subtracted. Value of i: " + i + "");
         break;
       case undefined:
-        console.log("The count is undefined. Value of i: " + i + "");
+        log("The count is undefined. Value of i: " + i + "");
         break;
     }
   }
@@ -369,33 +365,35 @@ function updateScore(type, score) {
     //Count player move on panel
     if (score) { /*For score TRUE*/
       if (p.moves <= 0 && p.stars > 0) {
-        console.log(messages.rechargeMoves);
+        log(messages.rechargeMoves);
         $updateMoves.classList = "btn-stats update-open";
       } else if (p.moves <= 0 && p.stars === 0) {
-        console.log(messages.gameOver, true);
+        log(messages.gameOver, true);
         resetGame();
       } else if (p.moves > 0) {
         p.moves--;
         m.innerText = p.moves;
       } else {
-        console.log("ERR: moves is unexpected. Moves: " + moves);
+        log("ERR: moves is unexpected. Moves: " + p.moves);
       }
     } else if (score === 0) { /*For score [0] reset*/
       p.moves = 13;
       m.innerText = p.moves;
-      console.log(messages.resetMoves + p.moves);
+      log(messages.resetMoves + p.moves);
     } else {
-      console.log("ERR: score is unexpected. Score: " + score);
+      log("ERR: score is unexpected. Score: " + score);
     }
   } else if (type === 2) { /*STARS*/
 
     if (score) { /*For score TRUE*/
       //Check if player has less than 3 stars
       if (p.stars === 3) {
-        console.log("***");
+        log("***");
       } else if (p.stars >= 0 && p.stars <= 3) {
         p.stars++;
       }
+    } else if (score === 0) {
+      p.stars = 3;
     } else if (score === false && p.stars > 0) { /*For score FALSE*/
       //Subtract one star of the player
       p.stars--;
@@ -431,7 +429,7 @@ function checkMatch (obj, iPath, iChild) {
 
   if (openCards.length === 0) {
     //Check error for function calling
-    console.log("Is just one card selected, choose one card.");
+    log("Is just one card selected, choose one card.");
   } else if (openCards.length === 1) {
     //When this is the second card
     const firstCard = openCards[0];
@@ -462,13 +460,13 @@ function checkMatch (obj, iPath, iChild) {
         updateScore(2, true);
 
         //Log the cards on console
-        console.log(messages.match + icoOne);
+        log(messages.match + icoOne);
 
         //Check if wins
         if (countMatch.length === iconsMatch.length) {
           //Print the game result and start a new game
-          console.log(messages.win, true);
-          console.log(messages.playAgain);
+          log(messages.win, true);
+          log(messages.playAgain);
           animationWin();
         }
       }, 1000);
@@ -498,7 +496,7 @@ function checkMatch (obj, iPath, iChild) {
         updateScore(1, true);
         updateScore(2, false);
 
-        console.log(messages.wrong);
+        log(messages.wrong);
       }, 2000);
 
       //Clear const value for openCards
@@ -526,7 +524,7 @@ function openItem (item, obj, iPath, iChild) {
   //If is already a card open, check if match w/ first card
   if (openCards.length !== 0) {
     if (o.index === openCards[0].index) {
-      console.log(messages.next);
+      log(messages.next);
     } else {
       checkMatch(o, p, c);
     }
@@ -562,6 +560,6 @@ Array.from($card).forEach(function(card) {
     currentIcon = item.path[0].childNodes[0].classList;
 
     //Check on the console for selected card - icon class
-    console.log("ITEM SELECTED: " + currentIcon["1"]);
+    log("ITEM SELECTED: " + currentIcon["1"]);
   });
 });
