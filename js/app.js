@@ -8,7 +8,7 @@
  * Create a list that holds all of your cards
  */
 const player = {
-  moves: 0,
+  moves: 13,
   stars: 3
 };
 const $icons = [
@@ -125,18 +125,23 @@ const cards = {
 
 //Message object
 const messages = {
-  welcome: "Choose a card and try to remember your pick.",
+  /*welcome: "<pre class='console-ascii'><br  />███╗   ███╗███████╗███╗   ███╗ ██████╗ ██████╗ ██╗   ██╗<br />████╗ ████║██╔════╝████╗ ████║██╔═══██╗██╔══██╗╚██╗ ██╔╝<br />██╔████╔██║█████╗  ██╔████╔██║██║   ██║██████╔╝ ╚████╔╝<br />██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║   ██║██╔══██╗  ╚██╔╝<br />██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝██║  ██║   ██║<br />╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝</pre><br /><br /><span class='console-text'>Welcome to Memory, hope you enjoy it!</span>",*/
+  welcome: ">Welcome to Memory, hope you enjoy it!",
+  tutorial: "<br />----------------------<br /><span class='console-text'>Find all matches to WIN.<br />ONE MOVE open two cards.<br />IF MATCH = +1 STAR.<br /> IF Doesn't MATCH = -1 STAR.<br />----------------------</span>",
   next: "Choose your next card.",
   match: "It's a match!!! Matched icon: ",
   wrong: "Sorry, wrong combination. Try again.",
   moves: "+1 move. Moves: ",
-  win: "Congratulations! You WON.",
+  win: "██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗ <br />██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗<br />██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝<br />██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗<br />╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║<br /> ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝",
   finalScore: "Your finalScore is: ",
-  starFull: "Nice move, you have THREE STARS!",
+  starFull: "Nice, you have THREE STARS!",
   starZero: "You have 0 stars.",
   resetMoves: "Reseted moves. MOVES: ",
   restartGame: "RESTART...<br />LOADING...<br />GAME RENEWED.",
-  playAgain: "<br />|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />"
+  playAgain: "|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
+  rechargeMoves: "<span class='console-text'>You have ZERO MOVES, click in RECHARGE.</span>",
+  gameOver: " ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
+  movesUpdated: "Your MOVES have been updated."
 }
 
 /*
@@ -171,7 +176,7 @@ function log(message) {
 }*/
 
 function welcomeMessage() {
-  console.log(messages.welcome);
+  console.log(messages.welcome + messages.tutorial);
 }
 
 /*
@@ -234,6 +239,8 @@ var currentItem;
 const openCards = [];
 const countMatch = [];
 const iconsMatch = $icons.slice(0, 8);
+const $openConsole = document.getElementById("open-console");
+const $updateMoves = document.getElementById("update-moves");
 const $starOne = document.getElementById("star-one");
 const $starTwo = document.getElementById("star-two");
 const $starThree = document.getElementById("star-three");
@@ -257,7 +264,7 @@ function resetGame() {
   addIcons();
 
   //Update stars and moves value on the screen
-  player.moves = 0;
+  player.moves = 13;
   player.stars = 3;
   updateScore(1, 0);
   updateScore(2, true);
@@ -272,6 +279,36 @@ function animationWin() {
     resetGame();
   }, 3000);
 }
+
+
+function handleConsole() {
+  if ($consoleBox.classList[0] === "console-box-open") {
+    $consoleBox.classList = "console-box-closed";
+  } else if ($consoleBox.classList[0] === "console-box-closed") {
+    $consoleBox.classList = "console-box-open";
+  } else {
+    $consoleBox.classList = "console-box-open";
+  }
+}
+
+function rechargeButton() {
+  player.moves += 10;
+  updateScore(1, true);
+  updateScore(2, false);
+  console.log(messages.movesUpdated);
+  $updateMoves.classList = "btn-stats update-closed";
+}
+
+//Open console when clicked
+$openConsole.addEventListener("click", function() {
+  handleConsole();
+});
+
+//Rechage moves
+$updateMoves.addEventListener("click", function() {
+  rechargeButton();
+});
+
 
 /*Function to append stars on the panel-score
  *
@@ -331,14 +368,24 @@ function updateScore(type, score) {
   if (type === 1) { /*MOVES*/
     //Count player move on panel
     if (score) { /*For score TRUE*/
-      p.moves++;
-      m.innerText = p.moves;
+      if (p.moves <= 0 && p.stars > 0) {
+        console.log(messages.rechargeMoves);
+        $updateMoves.classList = "btn-stats update-open";
+      } else if (p.moves <= 0 && p.stars === 0) {
+        console.log(messages.gameOver, true);
+        resetGame();
+      } else if (p.moves > 0) {
+        p.moves--;
+        m.innerText = p.moves;
+      } else {
+        console.log("ERR: moves is unexpected. Moves: " + moves);
+      }
     } else if (score === 0) { /*For score [0] reset*/
-      p.moves = 0;
+      p.moves = 13;
       m.innerText = p.moves;
       console.log(messages.resetMoves + p.moves);
     } else {
-      console.log("ERR: score is unexpected. Score: " + score + "");
+      console.log("ERR: score is unexpected. Score: " + score);
     }
   } else if (type === 2) { /*STARS*/
 
@@ -364,10 +411,10 @@ const $restart = document.getElementById("restart");
 //Restart the game when clicked on restart icon
 $restart.addEventListener("click", function(r) {
   //Add class w/ animation and run function to restart
-  $restart.classList = "run-restart";
+  $restart.classList = "btn-stats run-restart";
   window.setTimeout(function() {
     resetGame();
-    $restart.classList = "";
+    $restart.classList = "btn-stats";
   }, 1000);
 });
 
@@ -420,6 +467,7 @@ function checkMatch (obj, iPath, iChild) {
         //Check if wins
         if (countMatch.length === iconsMatch.length) {
           //Print the game result and start a new game
+          console.log(messages.win, true);
           console.log(messages.playAgain);
           animationWin();
         }
@@ -499,6 +547,12 @@ Array.from($card).forEach(function(card) {
     const o = $cardsObj[oID];
     const iPath = item.path[0];
     const iChild = iPath.childNodes[0];
+
+    //Check if player can pick a card
+    if (player.moves <= 0) {
+      updateScore(1, true);
+      return false;
+    }
 
     //Function for open card
     openItem(i, o, iPath, iChild);

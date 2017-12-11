@@ -172,7 +172,7 @@ h1 {
 }
 
 #console-box{
-  max-height: 50vw;
+  max-height: 49vw;
   max-width: 40vw;
   overflow: auto;
   order: 2;
@@ -180,13 +180,48 @@ h1 {
   background: #212121;
   color: #07ce07;
   box-sizing: border-box;
-  padding: 1em;
+  padding: 0 1em;
   flex-grow: 1;
+  transition: 1s ease;
+}
+
+#open-console {
+  text-align: left;
+  border: .1em solid #212121;
+  background: #121212;
+  padding: .2em 0 .2em .8em;
+  z-index: 5;
+}
+
+#console-icon {
+  color: #fff;
+}
+
+.console-box-open {
+  transform: translateY(0);
+}
+
+.console-box-closed {
+  transform: translateY(-100em);
 }
 
 #console {
   align-self: baseline;
   will-change: contents;
+}
+
+#console-title {
+  order: 0;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  background: #212121;
+}
+
+.console-text {
+  transition: 5s;
+  transform: ;
 }
 
 #console-stats {
@@ -195,9 +230,9 @@ h1 {
   border: 1px solid #fff;
   min-width: 10vw;
   min-height: 10vw;
-  position: fixed;
+  position: absolute;
   top: 20vh;
-  right: 10vh;
+  right: 5vh;
   overflow: hidden;
   text-align: left;
   line-height: 1.7em;
@@ -218,14 +253,13 @@ h1 {
     display: inline-block;
 }
 
-#console-stats #restart {
-    float: right;
+#console-stats .btn-stats {
     cursor: pointer;
     border: 1px solid #07ce07;
     font-weight: bold;
     margin: .4em 0 0 0;
     padding: 0 .2em;
-    max-width: 53%;
+    max-width: 6em;
 }
 
 #moves #restart .run-restart {
@@ -237,8 +271,15 @@ h1 {
   transition: 2s ease-in-out;
 }
 
-#restart-text {
+#update-moves.update-closed {
+  display: none;
+  visibility: hidden;
+}
 
+#update-moves.update-open {
+  animation: rec;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
 }
 
 #stars .fa-star {
@@ -257,6 +298,11 @@ h1 {
 @keyframes star {
   0%{transform: rotateZ(1020deg);font-size: 14px;}
   100%{transform: rotateZ(0deg);}
+}
+
+@keyframes rec {
+  0%{transform: translateZ(100deg);}
+  100%{transform: translateZ(0);}
 }
 
 /*
