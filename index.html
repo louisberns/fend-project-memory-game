@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Matching Game</title>
+    <title>MEMORY GAME</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="MERMORY" content="Test your memory and try to complete with less amout of moves possible.">
     <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
@@ -31,6 +31,7 @@
   ██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╔╝██║  ██║   ██║
   ╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝</pre>
               <div id="console-stats">
+                <div id="timer">00:00</div>
                 <ul id="stars">
                   <li><i id="star-one" class="fa fa-star open-star"></i></li>
                   <li><i id="star-two" class="fa fa-star open-star"></i></li>
@@ -52,15 +53,25 @@
         <ul id="deck">
 
         </ul>
-
-        <!--Insert-->
-        <div id="win-alert">
-          <div id="win-message">
-            <span id="score-win"></span>
-            <span id="stars-win"></span>
-            <button id="play-again"></button>
-          </div>
-        </div>
+    </div>
+    <!--Insert-->
+    <div id="win-alert" class="win-alert-closed">
+      <div id="win-message">
+        <pre id="win-message">
+██╗    ██╗██╗███╗   ██╗███╗   ██╗███████╗██████╗ 
+██║    ██║██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+██║ █╗ ██║██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+██║███╗██║██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+╚███╔███╔╝██║██║ ╚████║██║ ╚████║███████╗██║  ██║
+ ╚══╝╚══╝ ╚═╝╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝</pre>
+        <br />
+        <span>Timer: <span id="timer-win"></span></span>
+        <span>Moves: <span id="moves-win"></span></span>
+        <br />
+        <span>Stars: <span id="stars-win"></span></span>
+        <br />
+        <button type="button" id="play-again" value="Play Again">Play Again</button>
+      </div>
     </div>
 
     <script src="js/app.js"></script>

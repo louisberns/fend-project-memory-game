@@ -17,7 +17,7 @@ body {
 
 body {
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
-    font-family: monospace;
+    font-family: VT323, monospace;
 }
 
 .container {
@@ -32,8 +32,8 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 300;
+    font-family: VT323, monospace;
+    font-weight: 700;
 }
 
 /*
@@ -172,7 +172,7 @@ h1 {
 }
 
 #console-box{
-  max-height: 49vw;
+  max-height: 48.5vw;
   max-width: 40vw;
   overflow: auto;
   order: 2;
@@ -235,10 +235,15 @@ h1 {
   right: 5vh;
   overflow: hidden;
   text-align: left;
-  line-height: 1.7em;
+  line-height: 1.2em;
   box-sizing: border-box;
   padding: 0.5em;
   margin: 0;
+  font-size: 1.2em;
+}
+
+#console-stats #timer {
+
 }
 
 #console-stats #stars {
@@ -310,5 +315,54 @@ h1 {
  */
 
  #win-alert {
-   display: none;
+    justify-content: center;
+    align-items: center;
+    background: #14b907;
+    top: 0;
+    color: #212121;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    bottom: 0;
+    transition: 1s ease;
  }
+
+.win-alert-closed {
+  display: none;
+}
+
+.win-alert-open {
+  display: flex;
+  animation: winner 1s;
+}
+
+#win-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#win-message span {
+  font-size: 2em;
+  color: #212121;
+  text-align: center;
+}
+
+#play-again {
+  border: 2px solid #212121;
+  color: #fff;
+  background: #14b907;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 2em;
+  margin: 0 auto;
+  padding: 1em;
+  width: 60%;
+  text-align: center;
+}
+
+@keyframes winner {
+  0%{transform: scale(0);}
+  100%{transform: scale(1);}
+}

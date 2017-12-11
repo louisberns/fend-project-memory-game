@@ -121,7 +121,8 @@ const cards = {
   }
 };
 
-
+//Cat last time count
+const lastTimer = [];
 
 //Message object
 const messages = {
@@ -137,10 +138,12 @@ const messages = {
   starZero: "You have 0 stars.",
   resetMoves: "Reseted moves. MOVES: ",
   restartGame: "<br />RESTART...<br />LOADING...<br />GAME RENEWED.<br />",
-  playAgain: "|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
+  playAgain: "|--*</br>|-YOUR SCORE: <br />|---Timer: " + lastTimer[0] + " <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
   rechargeMoves: "<span class='console-text'>You have ZERO MOVES, click in RECHARGE.</span>",
   gameOver: "<br /> ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
-  movesUpdated: "Your MOVES have been updated.<br />You PAID one STAR."
+  movesUpdated: "Your MOVES have been updated.<br />You PAID one STAR.",
+  timerStart: "TIMER has started...",
+  timerStop: "TIMER has stoped."
 }
 
 /*
@@ -244,6 +247,12 @@ const $starTwo = document.getElementById("star-two");
 const $starThree = document.getElementById("star-three");
 const movesHTML = document.getElementById("moves");
 const iconsStars = [$starOne, $starTwo, $starThree];
+const $winAlert = document.getElementById("win-alert");
+const $movesWin = document.getElementById("moves-win");
+const $starsWin = document.getElementById("stars-win");
+const $timerWin = document.getElementById("timer-win");
+const $playAgain = document.getElementById("play-again");
+const $timer = document.getElementById("timer");
 
 //Initialize a new game
 function newGame() {
@@ -269,8 +278,20 @@ function resetGame() {
   countMatch.splice(0, countMatch.length);
 }
 
+//Open pop-up to interact with player
+function openPopWin() {
+  $movesWin.innerText = lastTimer[0];
+  $movesWin.innerText = player.moves;
+  $starsWin.innerText = player.stars;
+  $winAlert.classList = "win-alert-open";
+}
+
 //Function for modal to win the game and start new one
 function animationWin() {
+  
+  window.setTimeout(function() {
+    openPopWin();
+  }, 1000);
   window.setTimeout(function() {
     resetGame();
   }, 3000);
@@ -303,6 +324,10 @@ $openConsole.addEventListener("click", function() {
 //Rechage moves
 $updateMoves.addEventListener("click", function() {
   rechargeButton();
+});
+
+$playAgain.addEventListener("click", function() {
+  $winAlert.classList = "win-alert-closed";
 });
 
 
@@ -403,6 +428,25 @@ function updateScore(type, score) {
     appendStars(p.stars, score);
   }
 }
+
+/*
+ * Function for handle TIMER
+ * IF TRUE => Start timer
+ * IF FALSE => Stop timer and save count in temp var
+ */
+function timerScore (handle) {
+  if (handle) {
+    log(messages.timerStart);
+  } else if (!handle) {
+    //Insert last time count in const to display in Score Panel
+    lastTimer.push("00:00");
+
+    log(messages.timerStop);
+  } else {
+    log("There is a problem with TIMER function call.")
+  }
+}
+
 
 //Variables to control elements on page
 const $card = document.getElementsByClassName("card");
@@ -553,6 +597,11 @@ Array.from($card).forEach(function(card) {
       updateScore(1, true);
       return false;
     }*/
+
+    //Start timer
+    if (player.moves === 0) {
+      timerScore(true);
+    }
 
     //Function for open card
     openItem(i, o, iPath, iChild);
