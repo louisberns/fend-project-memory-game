@@ -8,7 +8,7 @@
  * Create a list that holds all of your cards
  */
 const player = {
-  moves: 7,
+  moves: 0,
   stars: 3
 };
 const $icons = [
@@ -364,7 +364,7 @@ function updateScore(type, score) {
   if (type === 1) { /*MOVES*/
     //Count player move on panel
     if (score) { /*For score TRUE*/
-      if (p.moves <= 0 && p.stars > 0) {
+      /*if (p.moves <= 0 && p.stars > 0) {
         log(messages.rechargeMoves);
         $updateMoves.classList = "btn-stats update-open";
       } else if (p.moves <= 0 && p.stars === 0) {
@@ -375,9 +375,11 @@ function updateScore(type, score) {
         m.innerText = p.moves;
       } else {
         log("ERR: moves is unexpected. Moves: " + p.moves);
-      }
+      }*/
+      p.moves++;
+      m.innerText = p.moves;
     } else if (score === 0) { /*For score [0] reset*/
-      p.moves = 7;
+      p.moves = 0;
       m.innerText = p.moves;
       log(messages.resetMoves + p.moves);
     } else {
@@ -547,10 +549,10 @@ Array.from($card).forEach(function(card) {
     const iChild = iPath.childNodes[0];
 
     //Check if player can pick a card
-    if (player.moves <= 0) {
+    /*if (player.moves <= 0) {
       updateScore(1, true);
       return false;
-    }
+    }*/
 
     //Function for open card
     openItem(i, o, iPath, iChild);
