@@ -8,7 +8,7 @@
  * Create a list that holds all of your cards
  */
 const player = {
-  moves: 13,
+  moves: 7,
   stars: 3
 };
 const $icons = [
@@ -140,7 +140,7 @@ const messages = {
   playAgain: "|--*</br>|-YOUR SCORE: <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
   rechargeMoves: "<span class='console-text'>You have ZERO MOVES, click in RECHARGE.</span>",
   gameOver: "<br /> ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
-  movesUpdated: "Your MOVES have been updated."
+  movesUpdated: "Your MOVES have been updated.<br />You PAID one STAR."
 }
 
 /*
@@ -288,7 +288,7 @@ function handleConsole() {
 }
 
 function rechargeButton() {
-  player.moves += 10;
+  player.moves += 7;
   updateScore(1, true);
   updateScore(2, false);
   log(messages.movesUpdated);
@@ -377,7 +377,7 @@ function updateScore(type, score) {
         log("ERR: moves is unexpected. Moves: " + p.moves);
       }
     } else if (score === 0) { /*For score [0] reset*/
-      p.moves = 13;
+      p.moves = 7;
       m.innerText = p.moves;
       log(messages.resetMoves + p.moves);
     } else {
