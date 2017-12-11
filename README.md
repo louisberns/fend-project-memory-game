@@ -19,6 +19,7 @@ All the game communication is made through the Console.
 Pay attention it may tell you something important.
 
 ## Next Features
+- [ ] New Game animation
 - [ ] Limited number of moves
 - [ ] Cast STAR to gain 7 moves
 - [ ] Include player items inventory

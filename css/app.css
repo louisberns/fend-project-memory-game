@@ -164,7 +164,7 @@ h1 {
 
 #console-panel {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   min-width: 40vw;
   min-height: 50vw;
@@ -172,7 +172,7 @@ h1 {
 }
 
 #console-box{
-  max-height: 48.5vw;
+  max-height: 48vw;
   max-width: 40vw;
   overflow: auto;
   order: 2;

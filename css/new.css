@@ -1,0 +1,46 @@
+#new-load {
+  justify-content: center;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #212121;
+  z-index: 99;
+}
+
+.new-load-closed {
+  display: none;
+}
+
+.new-load-open {
+  transition: none;
+  display: flex;
+}
+
+#load-pages {
+  color: #14b907;
+  background: #212121;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  transition: 5s ease-in;
+  line-height: 1.2em;
+  font-size: 1.2em;
+  order: 1;
+}
+
+.load-pages-closed {
+  display: none;
+}
+
+.load-pages-open {
+  display: flex;
+  animation: load-text 10s;
+}
+
+@keyframes load-text {
+  0%{transform: translateY(100vh);}
+  100%{transform: translateY(-50vh);}
+}

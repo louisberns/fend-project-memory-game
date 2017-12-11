@@ -9,7 +9,10 @@
  */
 const player = {
   moves: 0,
-  stars: 3
+  stars: 3,
+  timer: false,
+  min: "00",
+  sec: "00"
 };
 const $icons = [
   "fa-diamond",
@@ -105,7 +108,8 @@ const cards = {
       $deck.innerHTML += cardHTML;
     });
 
-    //Display stars and moves on the screen
+    //Update timer, stars and moves value on the screen
+    handleTimer(0);
     updateScore(1, 0);
     updateScore(2, 0);
   },
@@ -121,9 +125,6 @@ const cards = {
   }
 };
 
-//Cat last time count
-const lastTimer = [];
-
 //Message object
 const messages = {
   welcome: ">Welcome to Memory, hope you enjoy it!",
@@ -138,12 +139,12 @@ const messages = {
   starZero: "You have 0 stars.",
   resetMoves: "Reseted moves. MOVES: ",
   restartGame: "<br />RESTART...<br />LOADING...<br />GAME RENEWED.<br />",
-  playAgain: "|--*</br>|-YOUR SCORE: <br />|---Timer: " + lastTimer[0] + " <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",
   rechargeMoves: "<span class='console-text'>You have ZERO MOVES, click in RECHARGE.</span>",
   gameOver: "<br /> ██████╗  █████╗ ███╗   ███╗███████╗<br />██╔════╝ ██╔══██╗████╗ ████║██╔════╝<br />██║  ███╗███████║██╔████╔██║█████╗  <br />██║   ██║██╔══██║██║╚██╔╝██║██╔══╝  <br />╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗<br /> ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝<br /> ██████╗ ██╗   ██╗███████╗██████╗ <br />██╔═══██╗██║   ██║██╔════╝██╔══██╗<br />██║   ██║██║   ██║█████╗  ██████╔╝<br />██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗<br />╚██████╔╝ ╚████╔╝ ███████╗██║  ██║<br /> ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝",
   movesUpdated: "Your MOVES have been updated.<br />You PAID one STAR.",
-  timerStart: "TIMER has started...",
-  timerStop: "TIMER has stoped."
+  timerStart: "TIMER has been started...",
+  timerStop: "TIMER has been stoped.",
+  timerReset: "TIMER has been reseted."
 }
 
 /*
@@ -168,13 +169,6 @@ const $consoleBox = document.getElementById("console-box");
     $consoleBox.scrollTop = $consoleBox.scrollHeight;
   };
 })();
-
-/*//Log messages on console screen
-function log(message) {
-  m = message + "<br />";
-  $console.innerHTML += m;
-  $consoleBox.scrollTop = $consoleBox.scrollHeight;
-}*/
 
 function welcomeMessage() {
   log(messages.welcome + messages.tutorial);
@@ -253,6 +247,11 @@ const $starsWin = document.getElementById("stars-win");
 const $timerWin = document.getElementById("timer-win");
 const $playAgain = document.getElementById("play-again");
 const $timer = document.getElementById("timer");
+const $minTimer = document.getElementById("min-timer");
+const $secTimer = document.getElementById("sec-timer");
+const $minWin = document.getElementById("min-win");
+const $secWin = document.getElementById("sec-win");
+var Interval;
 
 //Initialize a new game
 function newGame() {
@@ -270,7 +269,8 @@ function resetGame() {
   cards.close();
   addIcons();
 
-  //Update stars and moves value on the screen
+  //Update timer, stars and moves value on the screen
+  handleTimer(0);
   updateScore(1, 0);
   updateScore(2, 0);
 
@@ -280,7 +280,8 @@ function resetGame() {
 
 //Open pop-up to interact with player
 function openPopWin() {
-  $movesWin.innerText = lastTimer[0];
+  $minWin.innerText = player.min;
+  $secWin.innerText = player.sec;
   $movesWin.innerText = player.moves;
   $starsWin.innerText = player.stars;
   $winAlert.classList = "win-alert-open";
@@ -288,7 +289,7 @@ function openPopWin() {
 
 //Function for modal to win the game and start new one
 function animationWin() {
-  
+
   window.setTimeout(function() {
     openPopWin();
   }, 1000);
@@ -432,21 +433,78 @@ function updateScore(type, score) {
 /*
  * Function for handle TIMER
  * IF TRUE => Start timer
- * IF FALSE => Stop timer and save count in temp var
+ * IF FALSE => Pause timer and save count in temp var
  */
-function timerScore (handle) {
-  if (handle) {
-    log(messages.timerStart);
-  } else if (!handle) {
-    //Insert last time count in const to display in Score Panel
-    lastTimer.push("00:00");
+var sec = 0;
+var min = 0;
 
+function startTimer() {
+  sec++;
+
+  if (sec < 9) {
+    $secTimer.innerText = "0" + sec;
+  }
+
+  if (sec > 9) {
+    $secTimer.innerText = sec;
+  }
+
+  if (sec > 59) {
+    min++;
+    $minTimer.innerText = "0" + min;
+    sec = 0;
+    $secTimer.innerText = "0" + sec;
+  }
+
+  if (min > 9) {
+    $minTimer.innerText = min;
+  }
+}
+
+function handleTimer (handle) {
+  if (handle) { /* For handle TRUE - START*/
+    //Make timer start and tell the player
+    player.timer = true;
+    clearInterval(Interval);
+    Interval = setInterval(startTimer, 100);
+    log(messages.timerStart);
+  } else if (handle === false) { /* For handle FALSE - PAUSE */
+    //Insert last time count in const to display in Score Panel
+    showLastTime(sec, min);
+    clearInterval(Interval);
+    player.timer = false;
     log(messages.timerStop);
+  } else if (handle === 0) { /* For handle [0] - RESET */
+    //Reset timer and player status, print
+    player.timer = false;
+    clearInterval(Interval);
+    $minTimer.innerText = "00";
+    $secTimer.innerText = "00";
+    player.min = "00";
+    player.sec = "00";
+    log(messages.timerReset);
   } else {
     log("There is a problem with TIMER function call.")
   }
 }
 
+function showLastTime(sec, min) {
+  let c = [];
+  if (min < 10) {
+    min = "0" + min;
+    c.push(min);
+  } else {
+    c.push(min.toString());
+  }
+  if (sec < 10) {
+    sec = "0" + sec;
+    c.push(sec);
+  } else {
+    c.push(sec.toString());
+  }
+  player.min = c[0];
+  player.sec = c[1];
+}
 
 //Variables to control elements on page
 const $card = document.getElementsByClassName("card");
@@ -512,7 +570,7 @@ function checkMatch (obj, iPath, iChild) {
         if (countMatch.length === iconsMatch.length) {
           //Print the game result and start a new game
           log(messages.win, true);
-          log(messages.playAgain);
+          log("|--*</br>|-YOUR SCORE: <br />|---Timer: " + player.min + ":" + player.sec + " <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",);
           animationWin();
         }
       }, 1000);
@@ -599,8 +657,10 @@ Array.from($card).forEach(function(card) {
     }*/
 
     //Start timer
-    if (player.moves === 0) {
-      timerScore(true);
+    if (player.timer === false) {
+      if (player.moves === 0 && openCards.length === 0) {
+        handleTimer(true);
+      }
     }
 
     //Function for open card
