@@ -289,7 +289,8 @@ function openPopWin() {
 
 //Function for modal to win the game and start new one
 function animationWin() {
-
+  handleTimer(false);
+  log("|--*</br>|-YOUR SCORE: <br />|---Timer: " + player.min + ":" + player.sec + " <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",);
   window.setTimeout(function() {
     openPopWin();
   }, 1000);
@@ -570,7 +571,6 @@ function checkMatch (obj, iPath, iChild) {
         if (countMatch.length === iconsMatch.length) {
           //Print the game result and start a new game
           log(messages.win, true);
-          log("|--*</br>|-YOUR SCORE: <br />|---Timer: " + player.min + ":" + player.sec + " <br />|---Moves: " + player.moves + "<br />|---Stars: " + player.stars + "<br />|-You can do better...<br />|--*<br />",);
           animationWin();
         }
       }, 1000);
