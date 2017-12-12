@@ -465,7 +465,7 @@ function handleTimer (handle) {
     //Make timer start and tell the player
     player.timer = true;
     clearInterval(Interval);
-    Interval = setInterval(startTimer, 100);
+    Interval = setInterval(startTimer, 1000);
     log(messages.timerStart);
   } else if (handle === false) { /* For handle FALSE - PAUSE */
     //Insert last time count in const to display in Score Panel
@@ -656,7 +656,7 @@ Array.from($card).forEach(function(card) {
 
     //Start timer
     if (player.timer === false) {
-      if (player.moves === 0 && openCards.length === 0) {
+      if (player.moves === 7 && openCards.length === 0) {
         handleTimer(true);
       }
     }
