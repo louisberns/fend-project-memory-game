@@ -119,6 +119,7 @@ const cards = {
 
       c.state = false;
       c.icon = undefined;
+      openCards.length = 0;
 
       i.classList = "card";
     });
